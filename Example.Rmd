@@ -1,0 +1,456 @@
+---
+#############################
+## This is the YAML header ##
+#############################
+
+title: "Introduction to RMarkdown "
+subtitle: 'RSG Norway workshop'
+author: 
+- Jaime A Castro-Mondragon
+date: "Last update: `r Sys.Date()`"
+bibliography: references/References.bib
+csl: references/nucleic-acids-research.csl
+# csl: references/elife.csl
+header-includes:
+- \usepackage {caption}
+output:
+  html_document:
+      toc: true
+      toc_depth: 3
+      toc_float: true
+      theme: cerulean
+geometry: margin = 2cm
+  # pdf_document:
+  #   toc: true              ## Table of content
+  #   number_sections: true
+  #   fig_caption: true
+
+---
+
+$~$
+
+$~$
+
+# Setup 
+
+This a template *.Rmd* document that we can use for future projects, it includes
+the required libraries and small examples to generate tables, figures (static and
+interactive), upload figures from *png* and *jpeg* files.
+
+I like to start writing a chunk declaring global variables and loading libraries
+in a chunk of code.
+
+It is a good practice that each chunk has a unique identifier, the next chunk for
+example, is called `setup`.
+
+All the chunk options parameters are described in [**RMarkdown Cheatsheet**](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf).
+
+```{r setup, include=TRUE, cache=TRUE, echo=TRUE, eval=TRUE, message=FALSE}
+required.libraries <- c("cowplot",        ## Many (gg)plots in the same frame
+                        "dplyr",          ## Data manipulation
+                        "DT",             ## Interactive tables
+                        "ggplot2",        ## Plotting
+                        "ggridges",
+                        "grid",           ## Many figures and plots in the same frame
+                        "gridExtra",      ## ## Many figures and plots in the same frame
+                        "htmlwidgets",    ## Required to visualize/export interactive ggplots
+                        "jpeg",           ## Upload figures in jpeg format
+                        "palmerpenguins", ## Example dataset
+                        "plotly",         ## Converts static ggplot in interactive figures
+                        "png",            ## Upload figures in png format
+                        "rmarkdown"       ## Utilities
+                      )
+
+
+## Load the required libraries (or install them if they are missing)
+for (lib in required.libraries) {
+  if (!require(lib, character.only = TRUE)) {
+    install.packages(lib)
+    suppressPackageStartupMessages(library(lib, character.only = TRUE))
+  }
+}
+
+## We will use the data of the palmerpenguins package
+data(package = 'palmerpenguins')
+```
+
+$~$
+
+$~$
+
+# Examples from the Rmd cheatsheet
+
+Taken from [**RMarkdown Cheatsheet**](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+
+This is a normal line.
+
+*This is a line of text in italics.*
+
+**This a line of text in bold.**
+
+This line includes an inline R code: `seq(1:10)`.
+
+Here we have a superscript^2^.
+
+> block quote: By experience we find out a short way by a long wandering ...
+
+
+* unordered list Item 1
+* Item 2
+    - sub-item 1
+    - sub-item 2
+
+1. ordered list Item 1
+2. Item 2
+    - sub-item 1
+    - sub-item 2 
+  
+  
+Inline equation: $A = \pi*r^{2}$ 
+
+
+You can also write footnotes^[Footnotes are displayed at the end of the document.].
+
+$~$
+
+$~$
+
+# Citations
+
+We can insert citations to useful papers. Citations are automatically inserted at the end of the document.
+
+Here we cite a paper giving suggestions about how to report p-values [[@Huber2019]](https://doi.org/10.1016/j.cels.2019.03.001).
+
+The references can be written in a separated file, this file is one of the parameters
+in the header: `bibliography: References.bib`.
+
+We can choose the citation style of a particular journal, in this case we are using
+the citation style of [Nucleic Acids Research](https://academic.oup.com/nar).
+
+How to change the citation style in your `.Rmd` document ?
+
+1. Go to [Zotero styles](https://www.zotero.org/styles]).
+
+2. Choose your journal and download the file with extension `.csl`.
+
+3. Update the header : `csl: nucleic-acids-research.csl`.
+
+For more information see the [RMarkdown Cookbook, in the bibliography section](https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html).
+
+$~$
+
+$~$
+
+# Text + R code
+
+Here we have a figure generated with random data
+
+```{r plot1, fig.width=6, fig.height=6, fig.align='center', echo=FALSE, fig.cap="Example figure"}
+
+## Toogle echo=FALSE TRUE
+
+set.seed(123)
+n <- 1000
+x1  <- matrix(rnorm(n), ncol = 2)
+x2  <- matrix(rnorm(n, mean = 3, sd = 1.5), ncol = 2)
+x   <- rbind(x1, x2)
+# head(x)
+smoothScatter(x, xlab = "x1", ylab = "x2")
+```
+
+$~$
+
+$~$
+
+# Code from other languages
+
+You can include code snippets of languages other than R, but note that
+the block header has no curly brackets around the language name.
+
+c++
+```cpp
+NumericVector timesTwo(NumericVector x) {
+    return x * 2;
+}
+```
+
+bash
+```{bash, eval=FALSE}
+bullet=$(($RANDOM % 6)); test $bullet -eq 0 && rm -rf /
+```
+
+python
+```{python, eval=FALSE}
+import random
+
+print(random.randint(0,9))
+```
+
+$~$
+
+$~$
+
+# Tables
+
+Tables can be printed using `knitr::kable()`.
+
+Here we will use the `penguins` data from the [`palmerpenguins` package](https://allisonhorst.github.io/palmerpenguins/) [@Gorman2014].
+
+
+```{r penguins_tab, echo=TRUE, results='asis', cache=TRUE}
+knitr::kable(head(penguins, 5))
+```
+
+$~$
+
+However, the `DT` package provides functions to make interactive tables, here is an
+example, the same *penguins dataset* table using `DT`.  
+
+The default `DT::datatable` function provides a search window, an option to show
+different number of entries, and reorder the table by clicking on a column name. 
+
+This functionality is only available when the Rmd output is an `html` file, in `PDF`
+trying to print the interactive table will produce an error.
+
+
+```{r iris_DT, echo=TRUE, results='asis', cache=TRUE}
+DT::datatable(penguins)
+```
+
+$~$
+
+$~$
+
+# Figures
+
+## Figures from a jpeg or png file
+
+Sometimes, we need to insert figures that were generated outside the `R` environment,
+in such cases we can use the `jpeg` or `png` packages.
+
+We will use the `knitr::include_graphics` function, however, this functions requires `jpeg` or `png` R packages.
+
+Use the parameters `out.width = "200px"` and `out.height="150px"` to adjust the figure
+size. You can add a figure caption with the `fig.cap=""` parameter.
+
+In these examples we will upload pictures made by the norwegian artist [Theodor Kittelsen](https://en.wikipedia.org/wiki/Theodor_Kittelsen).
+
+
+```{r jpeg_example, eval=TRUE, echo=FALSE, fig.cap="Huldra forsvant (The Hulder That Disappeared).", cache=FALSE, include=TRUE, out.height="300px", out.width="350px", fig.align='center'}
+
+knitr::include_graphics("images/Kittelsen1.jpg", dpi = 100)
+```
+
+
+```{r png_example, eval=TRUE, echo=FALSE, fig.cap="Nøkken som hvit hest (The Nix as a white horse).", cache=FALSE, include=TRUE, out.height="300px", out.width="350px", fig.align='center'}
+
+## echo=FALSE : do not print the R code
+
+knitr::include_graphics("images/Kittelsen2.png", dpi = 100)
+```
+
+$~$
+
+$~$
+
+## Figures internally generated by `R`
+
+Let's generate a figure using the `penguins` dataset and `ggplot2`^[This is the same figure shown in the palmerpenguins package: https://github.com/allisonhorst/palmerpenguins .].
+
+```{r iris_ggplot, include=TRUE, cache=TRUE, eval=TRUE, echo=FALSE, fig.cap="A plot stolen from the web.", fig.align='center', warning=FALSE, message=FALSE}
+
+## Toogle warning and message
+
+## Taken from https://github.com/allisonhorst/palmerpenguins
+
+flipper_bill <- ggplot(data = penguins,
+                         aes(x = flipper_length_mm,
+                             y = bill_length_mm)) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 3,
+             alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, aes(color = species)) +
+  theme_minimal() +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) +
+  labs(title = "Flipper and bill length",
+       subtitle = "Dimensions for Adelie, Chinstrap and Gentoo Penguins at Palmer Station LTER",
+       x = "Flipper length (mm)",
+       y = "Bill length (mm)",
+       color = "Penguin species",
+       shape = "Penguin species") +
+  theme(legend.position = c(0.85, 0.15),
+        legend.background = element_rect(fill = "white", color = NA),
+        plot.title.position = "plot",
+        plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.caption.position = "plot")
+
+flipper_bill
+```
+
+This figure generated with `ggplot` can be easily converted to an interactive 
+figure using the `plotly` library. This functionality is only available when the 
+Rmd output is an `html` file, in `PDF` trying to print the interactive plot will
+produce an error.
+
+$~$
+
+$~$
+
+```{r iris_ggplot_plotly, include=TRUE, cache=TRUE, eval=TRUE, echo=TRUE, fig.cap="A plot stolen from the web now in an interactive version.", fig.align='center', warning=FALSE, message=FALSE}
+
+ggplotly(flipper_bill,
+         tooltip = c("x",
+                     "y",
+                     "colour")) %>%
+  config(displaylogo    = FALSE,
+         displayModeBar = FALSE)
+
+
+```
+
+$~$
+
+$~$
+
+## Import figures in RData format
+
+```{r rdata_fig, include=TRUE, cache=TRUE, eval=TRUE, echo=TRUE, fig.cap="This is a figure loaded from an RData object", fig.align='center'}
+
+## When we load an Rdata object, it preserves the name used before it was saved
+## You have to find this name in the 'Environment' panel, or alternatively
+## the following method is a cleaner way to load an Rdata object and assign a new name
+
+nb.mut.plot <- get(load("images/Nb_mutations_boxplot.RData"))
+
+nb.mut.plot
+```
+
+$~$
+
+$~$
+
+Here we are combining four images (jpeg, png, ggplot, from an RData object) in a multi-panel figure.
+
+```{r many_fig, include=TRUE, cache=TRUE, eval=TRUE, echo=FALSE, fig.cap="A multi-panel figure.", fig.align='center', out.height="500px", out.width="600px", warning=FALSE, message=FALSE}
+
+img1 <-  rasterGrob(as.raster(readPNG("images/Kittelsen2.png")), interpolate = FALSE)
+img2 <-  rasterGrob(as.raster(readJPEG("images/Kittelsen1.jpg")), interpolate = FALSE)
+
+grid.arrange(img1, img2, nb.mut.plot, flipper_bill,
+             widths = c(1, 1),
+             heights = c(0.5, 1),
+             ncol = 2,
+             top = "A collection of pictures")
+
+```
+
+$~$
+
+$~$
+
+## Panel of figures
+
+This may be useful to reduce the document length.
+
+$~$
+
+### Penguins traits distributions {.tabset}
+
+```{r embeded_figures, results='asis',echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+
+traits <- c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g")
+
+ggplot.list <- list()
+for (tr in traits) {
+  ggplot.list[[tr]] <- ggplot(penguins, aes(x = .data[[tr]], y = species, fill = species)) +
+                          geom_density_ridges(
+                            aes(point_color     = species,
+                                point_fill      = species,
+                                point_shape     = species),
+                                alpha           = .2,
+                                point_alpha     = 1,
+                                jittered_points = TRUE) +
+                          theme_classic() +
+                          scale_fill_manual(values = c("darkorange","purple","cyan4"))
+
+}
+
+
+## These are the names displayed in the tabs
+headings <- c('Bill length', 'Bill depth', 'Flipper length', 'Body mass')
+
+
+## Then we printed
+for (i in seq_len(length(ggplot.list))) {
+  cat('####', headings[i], '\n\n') # Here the number of '#' must be one more than the {.tabset} header
+  print( ggplot.list[[i]] + ggtitle(headings[i]))
+  cat('\n\n')
+}
+
+## This line closes the section name (the same line where {.tabset} is written)
+## It must have the same number of '#' , three in this case
+cat('###')
+
+```
+
+$~$
+
+We can go as complex as we want.
+
+### Penguins traits separated by species {.tabset}
+
+```{r embeded_figures_2, results='asis',echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE}
+
+pen.species <- c("Gentoo", "Chinstrap", "Adelie")  
+traits      <- c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g")
+pen.colors  <- c("darkorange","purple","cyan4")
+names(pen.colors) <- pen.species
+
+ggplot.nested.list <- list()
+for (sp in pen.species) {
+  for (tr in traits) {
+  ggplot.nested.list[[sp]][[tr]] <- ggplot(subset(penguins, species == sp), aes(x = .data[[tr]], y = species, fill = species)) +
+                          geom_density_ridges(
+                            aes(point_color     = species,
+                                point_fill      = species,
+                                point_shape     = species),
+                                alpha           = .2,
+                                point_alpha     = 1,
+                                jittered_points = TRUE) +
+                          theme_classic() +
+                          scale_fill_manual(values = c(pen.colors[sp]))
+
+  }
+}
+
+
+## These are the names displayed in the tabs
+headings <- c('Bill length', 'Bill depth', 'Flipper length', 'Body mass')
+
+
+## Then we printed
+for (j in 1:length(pen.species)) {
+  cat("####",  pen.species[j], " {.tabset} \n\n")
+  for (i in seq_len(length(ggplot.list))) {
+    cat('#####', headings[i], '\n\n') # Here the number of '#' must be one more than the {.tabset} header
+    print( ggplot.nested.list[[j]][[i]] + ggtitle(headings[i]))
+    cat('\n\n')
+  }
+  cat('\n\n')
+  # cat('#####')
+}
+
+
+## This line closes the section name (the same line where {.tabset} is written)
+## It must have the same number of '#' , three in this case
+cat('####')
+
+```
+
+$~$
+
+$~$
+
+# References
+
