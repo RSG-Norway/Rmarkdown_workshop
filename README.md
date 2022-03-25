@@ -17,6 +17,8 @@ Overall these are the features included in the document:
 
 The output of `Example.Rmd` is an `html` document, altough RMarkdown allows to export `PDF` documents, in this example we will use the `html` output because it allows to have interactive features.
 
+Feel free to use this document for your own projects, `RMarkdown` has much more nice features than those covered in this template, feel free to add them and contribute to this repository.
+
 
 ## :computer: Install required software
 
