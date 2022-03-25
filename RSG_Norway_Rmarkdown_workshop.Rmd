@@ -1,0 +1,62 @@
+---
+title: "Introduction to RMarkdown "
+subtitle: 'RSG Norway workshop'
+author: "Jaime A Castro-Mondragon"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+<!-- The header '##' creates a new slide in the document -->
+
+## R Markdown
+
+Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents.
+
+For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+
+
+## What can you insert in R Markdown documents?
+
+- Text
+- Images
+- Tables
+- Code (written and/or executed to generate a result/figure)
+
+
+
+## Useful links to start with R Markdown
+
+- Introduction: https://rmarkdown.rstudio.com/lesson-1.html
+
+- Gallery for inspiration: https://rmarkdown.rstudio.com/gallery.html
+
+- Reference: https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf 
+
+- Cheatsheet: https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf 
+
+
+## For what else can we use R Markdown? 
+
+- Presentations (RStudio provides a presentation template).
+
+- Thesis (https://github.com/ismayc/thesisdown) 
+
+- Blogs/Websites (https://bookdown.org/yihui/blogdown/) 
+
+- Documentation (just like README, which you can get a template when opening the repository or from RStudio).
+
+- Books (https://bookdown.org/) 
+
+
+## Repository
+
+All the code and examples shown in this workshop are available in this repository: https://github.com/RSG-Norway/Rmarkdown_workshop
+
+(Sorry for the slides, this is the first time I write them in `RMarkdown`.)
