@@ -7,6 +7,7 @@ title: "Introduction to RMarkdown "
 subtitle: 'RSG Norway workshop'
 author: 
 - Jaime A Castro-Mondragon
+- Ping-Han Hsie
 date: "Last update: `r Sys.Date()`"
 bibliography: references/References.bib
 csl: references/nucleic-acids-research.csl
@@ -18,7 +19,7 @@ output:
       toc: true
       toc_depth: 3
       toc_float: true
-      theme: cerulean
+      theme: paper
 geometry: margin = 2cm
   # pdf_document:
   #   toc: true              ## Table of content
@@ -33,7 +34,7 @@ $~$
 
 # Setup 
 
-This a template *.Rmd* document that we can use for future projects, it includes
+This a template **.Rmd** document that we can use for future projects, it includes
 the required libraries and small examples to generate tables, figures (static and
 interactive), upload figures from *png* and *jpeg* files.
 
@@ -44,6 +45,7 @@ It is a good practice that each chunk has a unique identifier, the next chunk fo
 example, is called `setup`.
 
 All the chunk options parameters are described in [**RMarkdown Cheatsheet**](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf).
+
 
 ```{r setup, include=TRUE, cache=TRUE, echo=TRUE, eval=TRUE, message=FALSE}
 required.libraries <- c("cowplot",        ## Many (gg)plots in the same frame
@@ -198,7 +200,7 @@ Here we will use the `penguins` data from the [`palmerpenguins` package](https:/
 
 
 ```{r penguins_tab, echo=TRUE, results='asis', cache=TRUE}
-knitr::kable(head(penguins, 5))
+knitr::kable(head(penguins, 10))
 ```
 
 $~$
@@ -242,7 +244,7 @@ knitr::include_graphics("images/Kittelsen1.jpg", dpi = 100)
 ```
 
 
-```{r png_example, eval=TRUE, echo=FALSE, fig.cap="Nøkken som hvit hest (The Nix as a white horse).", cache=FALSE, include=TRUE, out.height="300px", out.width="350px", fig.align='center'}
+```{r png_example, eval=TRUE, echo=FALSE, fig.cap="Nøkken som hvit hest (The Nix as a white horse).", cache=FALSE, include=TRUE, out.height="200px", out.width="250px", fig.align='center'}
 
 ## echo=FALSE : do not print the R code
 
@@ -257,7 +259,7 @@ $~$
 
 Let's generate a figure using the `penguins` dataset and `ggplot2`^[This is the same figure shown in the palmerpenguins package: https://github.com/allisonhorst/palmerpenguins .].
 
-```{r iris_ggplot, include=TRUE, cache=TRUE, eval=TRUE, echo=FALSE, fig.cap="A plot stolen from the web.", fig.align='center', warning=FALSE, message=FALSE}
+```{r iris_ggplot, include=TRUE, cache=TRUE, eval=TRUE, echo=FALSE, fig.cap="A plot stolen from the penguins repository", fig.align='center', warning=FALSE, message=FALSE}
 
 ## Toogle warning and message
 
@@ -265,7 +267,8 @@ Let's generate a figure using the `penguins` dataset and `ggplot2`^[This is the 
 
 flipper_bill <- ggplot(data = penguins,
                          aes(x = flipper_length_mm,
-                             y = bill_length_mm)) +
+                             y = bill_length_mm,
+                             label = year)) +
   geom_point(aes(color = species, 
                  shape = species),
              size = 3,
@@ -302,9 +305,10 @@ $~$
 ggplotly(flipper_bill,
          tooltip = c("x",
                      "y",
-                     "colour")) %>%
-  config(displaylogo    = FALSE,
-         displayModeBar = FALSE)
+                     "colour",
+                     "label")) %>%
+  config(displaylogo    = TRUE,
+         displayModeBar = TRUE)
 
 
 ```
