@@ -411,15 +411,14 @@ ggplot.nested.list <- list()
 for (sp in pen.species) {
   for (tr in traits) {
   ggplot.nested.list[[sp]][[tr]] <- ggplot(subset(penguins, species == sp), aes(x = .data[[tr]], y = species, fill = species)) +
-                          geom_density_ridges(
-                            aes(point_color     = species,
-                                point_fill      = species,
-                                point_shape     = species),
-                                alpha           = .2,
-                                point_alpha     = 1,
-                                jittered_points = TRUE) +
-                          theme_classic() +
-                          scale_fill_manual(values = c(pen.colors[sp]))
+                                      geom_density_ridges(aes(point_color     = species,
+                                                              point_fill      = species,
+                                                              point_shape     = species),
+                                                              alpha           = .2,
+                                                              point_alpha     = 1,
+                                                              jittered_points = TRUE) +
+                                      theme_classic() +
+                                      scale_fill_manual(values = c(pen.colors[sp]))
 
   }
 }
