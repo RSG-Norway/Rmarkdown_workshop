@@ -41,6 +41,8 @@ When you click the **Knit** button a document will be generated that includes bo
 
 - Cheatsheet: https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf 
 
+- Rmarkdown themes: https://www.datadreaming.org/post/r-markdown-theme-gallery/
+
 
 ## For what else can we use R Markdown? 
 
