@@ -63,6 +63,14 @@ for (lib in required.libraries) {
 }
 ```
 
+In case you are not using `RStudio` you can render your `Rmd` files. You can use a script provided in this repository and run it with the following command.
+
+The option `-d` must be the `Rmd` file you want to render.
+
+```R
+Rscript Render_Rmd_doc.R -d Template_RSG.Rmd
+```
+
 ## :collision: Contact + Report issues 
 
 This repository is maintained by [Jaime A Castro-Mondragon](https://jaimicore.github.io/) and the core members of the [RSG Norway](https://rsg-norway.iscbsc.org/). 
