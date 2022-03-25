@@ -75,6 +75,6 @@ Rscript Render_Rmd_doc.R -d Template_RSG.Rmd
 
 This repository is maintained by [Jaime A Castro-Mondragon](https://jaimicore.github.io/) and the core members of the [RSG Norway](https://rsg-norway.iscbsc.org/). 
 
-:e-mail: j.a.c.mondragon@ncmm.uio.no
+:e-mail: j.a.c.mondragon@ncmm.uio.no , rsg-norway@iscbsc.org
 
 Twitter: [@jaimicore](https://twitter.com/jaimicore) , [@RSGNorway](https://twitter.com/RSGNorway)
