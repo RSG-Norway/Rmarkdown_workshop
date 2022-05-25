@@ -25,6 +25,15 @@ Feel free to use this document for your own projects, `RMarkdown` has much more 
 - [R](https://www.r-project.org/) version >= 4.0.2
 - [RStudio](https://www.rstudio.com/products/rstudio/download/#download)
 
+- Install the following libraries. This example shows the installation in ubuntu.
+
+```bash
+sudo apt-get installlibcurl4-openssl-dev
+sudo apt-get install libxml2-dev
+sudo apt-get install texlive-xetex
+sudo apt-get install texlive-fonts-extra
+```
+
 
 ### Download this repository
 
@@ -75,6 +84,6 @@ Rscript Render_Rmd_doc.R -d Template_RSG.Rmd
 
 This repository is maintained by [Jaime A Castro-Mondragon](https://jaimicore.github.io/) and the core members of the [RSG Norway](https://rsg-norway.iscbsc.org/). 
 
-:e-mail: j.a.c.mondragon@ncmm.uio.no , rsg-norway@iscbsc.org
+:e-mail: jacmondragon@nykode.com , rsg-norway@iscbsc.org
 
 Twitter: [@jaimicore](https://twitter.com/jaimicore) , [@RSGNorway](https://twitter.com/RSGNorway)
