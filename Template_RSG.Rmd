@@ -7,7 +7,6 @@ title: "Introduction to RMarkdown "
 subtitle: 'RSG Norway workshop'
 author: 
 - Jaime A Castro-Mondragon
-- Ping-Han Hsie
 date: "Last update: `r Sys.Date()`"
 bibliography: references/References.bib
 csl: references/nucleic-acids-research.csl
@@ -332,24 +331,25 @@ nb.mut.plot
 
 $~$
 
-$~$
+<!-- $~$ -->
 
-Here we are combining four images (jpeg, png, ggplot, from an RData object) in a multi-panel figure.
+<!-- Here we are combining four images (jpeg, png, ggplot, from an RData object) in a multi-panel figure. -->
 
-```{r many_fig, include=TRUE, cache=TRUE, eval=TRUE, echo=FALSE, fig.cap="A multi-panel figure.", fig.align='center', out.height="500px", out.width="600px", warning=FALSE, message=FALSE}
 
-img1 <-  rasterGrob(as.raster(readPNG("images/Kittelsen2.png")), interpolate = FALSE)
-img2 <-  rasterGrob(as.raster(readJPEG("images/Kittelsen1.jpg")), interpolate = FALSE)
+<!-- ```{r many_fig, include=TRUE, cache=TRUE, eval=TRUE, echo=FALSE, fig.cap="A multi-panel figure.", fig.align='center', out.height="500px", out.width="600px", warning=FALSE, message=FALSE} -->
 
-grid.arrange(img1, img2, nb.mut.plot, flipper_bill,
-             widths = c(1, 1),
-             heights = c(0.5, 1),
-             ncol = 2,
-             top = "A collection of pictures")
+<!-- img1 <-  rasterGrob(as.raster(readPNG("images/Kittelsen2.png")), interpolate = FALSE) -->
+<!-- img2 <-  rasterGrob(as.raster(readJPEG("images/Kittelsen1.jpg")), interpolate = FALSE) -->
 
-```
+<!-- grid.arrange(img1, img2, nb.mut.plot, flipper_bill, -->
+<!--              widths = c(1, 1), -->
+<!--              heights = c(0.5, 1), -->
+<!--              ncol = 2, -->
+<!--              top = "A collection of pictures") -->
 
-$~$
+<!-- ``` -->
+
+<!-- $~$ -->
 
 $~$
 
